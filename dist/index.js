@@ -85,12 +85,17 @@ module.exports = function (md) {
   }),
       oldFn = rule.fn;
   ruler.at('table', function (state, startLine, endLine, silent) {
-    // Call old rule function first, get the state.
-    if (!oldFn(state, startLine, endLine, silent)) {
+    // Call old rule function first, get only the state added by table.
+    var originalTokens = state.tokens,
+        tableTokens = [];
+    state.tokens = tableTokens;
+    var success = oldFn(state, startLine, endLine, silent);
+    state.tokens = originalTokens;
+    if (!success) {
       return false;
     }
 
-    var parsedTokens = parseTokens(state.tokens),
+    var parsedTokens = parseTokens(tableTokens),
         processMatrix = parsedTokens.inlineMatrix.map(function (inlineRow) {
       return inlineRow.map(function (inline) {
         return {
@@ -142,11 +147,6 @@ module.exports = function (md) {
         _thisCell.cellCountInRow = 0;
       }
     }
-
-    // Render new tokens.
-    // NOT state.tokens = [], because state.tokens is a reference to a array in
-    // markdown-it's internal. Assigning to it breaks it.
-    state.tokens.length = 0;
 
     function renderRow(row) {
       state.tokens.push(parsedTokens.trs[row].open);
