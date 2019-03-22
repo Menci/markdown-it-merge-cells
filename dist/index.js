@@ -159,7 +159,7 @@ module.exports = function (md) {
 
         var tdOpen = parsedTokens.tdMatrix[row][_column2].open;
         if (_thisCell2.cellCountInColumn > 1 || _thisCell2.cellCountInRow > 1) {
-          tdOpen.attrs = [];
+          tdOpen.attrs = tdOpen.attrs || [];
 
           // 'rowspan' is how many rows (in a column) the cell is on.
           if (_thisCell2.cellCountInColumn > 1) {
