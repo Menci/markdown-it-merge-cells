@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-merge-cells",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A markdown-it plugin to merge adjacent cells with same content in tables",
   "keywords": [
     "markdown-it-plugin",
