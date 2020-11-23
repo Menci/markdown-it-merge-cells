@@ -187,7 +187,7 @@ module.exports = function (md) {
     state.tokens.push(parsedTokens.thead.close);
 
     // Table can have no tbody.
-    if (parsedTokens.rowCount !== 0) {
+    if (parsedTokens.tbody.open && parsedTokens.tbody.close) {
       state.tokens.push(parsedTokens.tbody.open);
       for (var _row2 = 1; _row2 < parsedTokens.rowCount; _row2++) {
         renderRow(_row2);
